@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo /opt/${APP_NAME}/tv_bin/script/teamviewer
