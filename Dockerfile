@@ -5,6 +5,10 @@ ENV LANG="en_US.UTF-8" LANGUAGE="en_US.UTF-8" APP_NAME="teamviewer9" IMG_NAME="t
 ENV DEBIAN_FRONTEND noninteractive
 ENV DISPLAY :0.0
 
+RUN echo deb http://old-releases.ubuntu.com/ubuntu/ quantal main restricted universe multiverse \
+         > /etc/apt/sources.list
+RUN echo exit 0 > /usr/sbin/policy-rc.d
+
 RUN apt-get update --yes --quiet \
     && apt-get install --yes --quiet --no-install-recommends \
         sudo dbus dbus-x11 upstart curl xz-utils libc6:i386 libdbus-1-3 libasound2 libsm6 libxfixes3 \
@@ -14,7 +18,7 @@ RUN apt-get update --yes --quiet \
         libxrandr2:i386 libxrender1:i386 libxtst6:i386 zlib1g:i386 \
     && locale-gen en_US.UTF-8 \
     && dpkg-reconfigure locales \
-    && curl -sL http://download.teamviewer.com/download/version_9x/teamviewer_linux.tar.gz -o /tmp/teamviewer_i386.tar.gz \
+    && curl -sLk https://dl.teamviewer.com/download/version_9x/teamviewer_linux.tar.gz -o /tmp/teamviewer_i386.tar.gz \
     && tar xf /tmp/teamviewer_i386.tar.gz -C /opt/ \
     && rm /tmp/teamviewer_i386.tar.gz \
     && apt-get remove --auto-remove --yes --purge wget \
